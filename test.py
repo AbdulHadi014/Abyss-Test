@@ -7,46 +7,32 @@ Created:	10/18/2023
 
 import re
 
-def reverse_words_v2(sentense):
-    reversed_sentense = ''
-    words = sentense.split()
+def reverse_words(sentence):
+    
+    words = re.findall(r'\S+|\b\w+\b', sentence)
+    
     for i in range(len(words)):
         words[i] = words[i][::-1]
         
-    for i in range(len(words)-1):
-        reversed_sentense += words[i] + ' '
-    reversed_sentense += words[len(words)-1]
+    if len(words) > 1:
+        reversed_sentence = ' '.join(words)
+    else:
+        reversed_sentence = words[0] if len(words) == 1 else ""
+    
+    print(reversed_sentence)
+    return reversed_sentence
 
-    length = len(reversed_sentense)
-    return reversed_sentense, length
 
+def test_reverse_words():
+    assert reverse_words("Hello World") == "olleH dlroW"
+    assert reverse_words("Python is great") == "nohtyP si taerg"
+    assert reverse_words("123 456 789") == "321 654 987"
+    assert reverse_words("") == ""
+    assert reverse_words("SingleWord") == "droWelgniS"
+    assert reverse_words("    Spaces    Between    Words    ") == "secapS neewteB sdroW"
+    assert reverse_words("    -12-3    21-23-  ") == "3-21- -32-12"
 
-def reverse_words_v1(sentense):
-    words = sentense.split()
-    for i in range(len(words)):
-        words[i] = words[i][::-1]
-        
-    reversed_sentense = ' '.join(words)
-    length = len(reversed_sentense)
-    return reversed_sentense, length
-
-def reverse_words(sentense):
-    words = re.findall(r'\b\w+\b',sentense)
-    for i in range(len(words)):
-        words[i] = words[i][::-1]
-        
-    reversed_sentense = ' '.join(words)
-    length = len(reversed_sentense)
-
-    return reversed_sentense, length
 
 if __name__=="__main__":
-    
-    reversed_sentense = reverse_words("This is my life")
-    print(reversed_sentense)
-    
-    reversed_sentense = reverse_words_v1("This is my life")
-    print(reversed_sentense)
 
-    reversed_sentense = reverse_words_v2("This is my life")
-    print(reversed_sentense)
+    test_reverse_words()
